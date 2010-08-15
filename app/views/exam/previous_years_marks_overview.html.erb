@@ -18,6 +18,9 @@
 
   <div class="box">
     <div id="register">
+
+<% this_user = User.find(session[:user_id]) if session[:user_id] %>
+<% unless this_user.student? %>
         <div class="header">
           <div class="prev">
             <%= link_to '◄',:action=>'previous_years_marks_overview',:student=>@student.previous_student %>
@@ -31,6 +34,7 @@
           </div>
           <div class="extender"></div>
         </div>
+<% end %>
         </div>
     <% @all_batches.each do |b| %>
       <%  @type = params[:type] %>

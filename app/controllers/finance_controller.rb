@@ -771,8 +771,9 @@ class FinanceController < ApplicationController
           FinanceFee.create(:student_id => s.id,:fee_collection_id => @finance_fee_collection.id)
           Reminder.create(:sender=>@user.id, :recipient=>s.student_user, :subject=> subject,
             :body => body, :is_read=>false, :is_deleted_by_sender=>false,:is_deleted_by_recipient=>false)
+       end
           Event.create(:title=> "Fees Due", :description =>fee_category.name, :start_date => @finance_fee_collection.due_date, :end_date => @finance_fee_collection.due_date, :is_due => true)
-        end
+        
       else
         @error = true
       end
