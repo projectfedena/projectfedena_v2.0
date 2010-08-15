@@ -1,0 +1,67 @@
+<div id="content-header">
+  <img src="/images/attendence/attendence.png" alt="" />
+  <h1>Employee Attendance</h1>
+  <h3>Detailed Report</h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+  <div class="box">
+
+
+    <div id="attendance-report">
+
+      <% @leave_types.each do |lt| %>
+        <div class="type_name-<%= cycle('odd', 'even') %> "><%= lt.name  %>:</div>
+        <% @report = EmployeeAttendance.find_all_by_employee_id_and_employee_leave_type_id(@employee.id, lt.id) %>
+
+        <% if @report == [] %>
+          <div class="date-<%= cycle('odd', 'even') %>">
+            No leaves taken
+          </div>
+        <% else %>
+          <% @report.each do |r| %>
+            <div class="date-<%= cycle('odd', 'even') %>">
+              <%= r.attendance_date.strftime("%B %d, %Y") %>
+              <% if r.is_half_day==true %>
+          (Half Day)
+              <% end %>
+            </div>
+          <% end %>
+
+        <% end %>
+
+      <% end %>
+      <div class="attendance-stats">
+        <% @total_leaves =0 %>
+        <% @leave_types.each do |lt| %>
+          <div class="type_name-<%= cycle('odd', 'even') %> ">
+            <% leave_counts = EmployeeAttendance.find_all_by_employee_id_and_employee_leave_type_id(@employee.id,lt.id) %>
+            <% leave_count=0 %>
+            <% leave_counts.each do |l| %>
+              <% if l.is_half_day==true %>
+                <% leave_count +=0.5 %>
+                <% @total_leaves +=0.5 %>
+              <% else %>
+                <% leave_count +=1 %>
+                <% @total_leaves += 1 %>
+              <% end %>
+            <% end %>
+            <% unless lt.max_leave_count == "" %>
+              <div class="type_name">Total <%= lt.name %>: <%= leave_count %>/<%= lt.max_leave_count %></div>
+            <% else %>
+              <div class="type_name">Total <%= lt.name %>: <%= leave_count %></div>
+            <% end %>
+          </div>
+        <% end %>
+
+        <div class="type_name-<%= cycle('odd', 'even') %> ">Total leaves taken: <%= @total_leaves %></div>
+      </div>
+    </div>
+    <div class="user_button">
+      <%=  link_to "► PDF Report", {:controller=>"employee_attendance", :action=>"employee_attendance_pdf", :id=>@employee.id},  :format=>'pdf', :target => '_blank' %>
+    </div>
+  </div>
+</div>

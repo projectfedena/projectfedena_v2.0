@@ -1,0 +1,72 @@
+<div id="content-header">
+  <img src="/images/student_details/student_details_logo.jpg" />
+  <h1>Student info</h1>
+  <h3>Previous Details</h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+
+  <% unless flash[:notice].nil? %> <p class="flash-msg"> <%= flash[:notice] %> </p> <% end %>
+
+  <div id="student_profile_heading">
+
+    <div id="profile_picture_display">
+      <% unless @student.photo_data.blank? %>
+        <img src="<%= url_for(:controller=>"student", :action => "show", :id => @student.admission_no) %>"  />
+      <% else %>
+        <%= image_tag "master_student/profile/topbanner.png" %>
+      <% end %>
+    </div>
+
+    <div id ="student_main_info">
+      <h3> <%= @student.first_name %> <%= @student.middle_name %> <%= @student.last_name %>  </h3>
+      <h4> Course & Batch : <%= @student.batch.course_name %> </h4>
+      <h4> Adm no. : <%= @student.admission_no %> </h4>
+    </div>
+
+          <div class="extender"> </div>
+  </div>
+
+  <div id="new_profile_info_top">
+
+
+    
+      <% unless @previous_data.nil? %>
+      <div class="new_profile_info_area1">
+      <div class="profile_info_label_top">Institution Name</div>
+      <div class="profile_info_text_top"><%=@previous_data.institution %></div>
+    </div>
+          <div class="new_profile_info_area1">
+      <div class="profile_info_label_top2">Course</div>
+      <div class="profile_info_text_top2"><%=@previous_data.course %></div>
+
+      <div class="profile_info_label_top">Year </div>
+      <div class="profile_info_text_top"><%=@previous_data.year %></div>
+    </div>
+          <div class="new_profile_info_area1">
+      <div class="profile_info_label_top2">Total Mark</div>
+      <div class="profile_info_text_top2"><%=@previous_data.total_mark %></div>
+    </div>
+              <div class="new_profile_info_area1">
+      <div class="profile_info_label_top"></div>
+      <div class="profile_info_text_top"><u>Subjects</u></div>
+    </div>
+    <div class="prev_subject_box">
+        <% @previous_subjects.each do |s| %>
+    <% a =cycle('2','') %>
+        <div class="new_profile_info_area2">
+      <div class="profile_info_label_top_1<%=a %>"><%= s.subject %> </div>
+      <div class="profile_info_text_top_1<%=a %>"><%= s.mark %> </div>
+    </div>
+    <% end %>
+    </div>
+    <% end %>
+
+    
+  <div class="extender"></div>
+      </div>
+
+</div>

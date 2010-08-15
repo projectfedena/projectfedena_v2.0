@@ -1,0 +1,53 @@
+<% if @users.nil? or @users.empty? %>
+  <div id="user_no_result">No users found</div>
+<% else %>
+  <div class="students-table">
+    <table id="listing" align="center" width="100%" cellpadding="1" cellspacing="1">
+      <tr class="tr-head">
+        <td>
+          Sl no.
+        </td>
+        <td>
+          Name
+        </td>
+        <td>
+         Username
+        </td>
+        <td>
+        
+        </td>
+      </tr>
+      <tr>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+      </tr>
+      <% @users.each_with_index do |user,i| %>
+        <tr class="tr-<%= cycle('odd', 'even') %>">
+          <td class="col-1">
+            <%= i+1 %>
+          </td>
+          <td class="col-2">
+      <%=  user.first_name.to_s + " " + user.last_name.to_s %>
+          </td>
+          <td class="col-3">
+            <%= user.username %>
+          </td>
+          <td class="col-4">
+            <%= link_to 'View Profile', :controller => 'user', :action => 'profile', :id => user.username  %>
+          </td>
+
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>

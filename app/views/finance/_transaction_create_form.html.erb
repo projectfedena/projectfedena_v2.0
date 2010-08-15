@@ -1,0 +1,25 @@
+<% form_for :transaction do |form| %>
+  <div id="create_user_form">
+    
+      <div class="label-field-pair">
+        <label for="title">Title </label>
+        <div class="text-field-bg"><%= form.text_field :title %> </div>
+      </div>
+      <div class="label-field-pair">
+        <label for="description">Description </label>
+        <div class="text-field-bg"><%= form.text_field :description %> </div>
+      </div>
+
+
+      <div class="label-field-pair">
+        <label for="amount">Amount</label>
+        <div class="text-field-bg"><%= form.text_field :amount %> </div>
+      </div>
+      <div class="label-field-pair">
+        <label for="category">Category</label>
+        <div class="text-input-bg"><%= select :transaction, :category_id, @categories.map { |c| [c.name, c.id] },:prompt=>'Select a category' %></div>
+      </div>
+
+       <%=  submit_tag "► Save",:class=>'submit_button' %>
+  </div>
+<% end %>

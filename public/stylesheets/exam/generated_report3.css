@@ -1,0 +1,16 @@
+#box{
+    width:700px;
+    margin:0px auto;
+}
+.box{
+    width:750px;
+    margin:0px auto;
+}
+
+table#listing {
+    -moz-border-radius:10px 10px 10px 10px;
+    -webkit-border-radius:10px;
+    background:none repeat scroll 0 0 #C3D9FF;
+    padding:20px 20px 40px;
+    width:770px;
+}

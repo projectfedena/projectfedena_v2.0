@@ -1,0 +1,37 @@
+<label class="head_label">Edit fee collection date <span></span></label>
+<% form_remote_for :finance_fee_collection,
+  :url => {:action => 'fee_collection_update', :id => @finance_fee_collection.id},
+  :complete => 'Modalbox.hide();return false;' do |form| %>
+<div id="form-errors"></div>
+  <div class="label-field-pair">
+    <label for="reason"> Fee category:</label>
+    <div class="text-input-bg"> <%= @finance_fee_collection.fee_category.name %></div>
+  <div id ="batchs"></div>
+  </div>
+  <div class="label-field-pair">
+    <label for="reason"> Course for this Category:</label>
+    <div class="text-input-bg"> <%= @finance_fee_collection.batch.full_name %></div>
+  <div id ="batchs"></div>
+  </div>
+  <div class="label-field-pair">
+    <label for="reason">  Fee Collection Name:</label>
+    <div class="text-input-bg"><%= form.text_field :name%></div>
+  </div>
+  <div class="label-field-pair">
+    <label for="reason">  Start Date</label>
+    <div class="text-input-bg"><%= calendar_date_select_tag 'fee_collection[start_date]', Date.today %></div>
+  </div>
+  <div class="label-field-pair">
+    <label for="reason">  End Date</label>
+    <div class="text-input-bg"><%= calendar_date_select_tag 'fee_collection[end_date]', Date.today %></div>
+  </div>
+  <div class="label-field-pair">
+    <label for="reason">  Due Date</label>
+    <div class="text-input-bg"><%= calendar_date_select_tag 'fee_collection[due_date]', Date.today %></div>
+  </div>
+
+  <div class="extender"></div>
+  <div id="submit-button">
+        <%=  submit_tag "► Update",:class=>'submit_button' %>
+  </div>
+<% end %>

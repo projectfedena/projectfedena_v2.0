@@ -1,0 +1,16 @@
+<ul id="category-list">
+<% unless @bank_details.empty? %>
+  <li class="heading"> Field name </li>
+    <%- @bank_details.each do |c| -%>
+      <li class="list<%=cycle('odd', 'even')%>">
+        <div class="category-name"><%= c.name %></div>
+        <div class="category-edit"><%= link_to "Edit", {:action => "edit_bank_details", :id=>c.id} %></div>
+        <div class="category-edit"><%= link_to "Delete", {:action => "delete_bank_details", :id=>c.id}, :confirm => "Are you sure?" %></div>
+      </li>
+     <% end %>
+
+  <% else %>
+<p class="flash-msg">No bank details record found</p>
+  <% end %>
+</ul>
+

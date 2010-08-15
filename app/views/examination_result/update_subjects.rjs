@@ -1,0 +1,2 @@
+page.replace_html 'subjects1', :partial => 'subjects', :object => @subjects
+page.replace_html 'exams1', :partial => 'exams', :object => @exams

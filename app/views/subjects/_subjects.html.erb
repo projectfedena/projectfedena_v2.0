@@ -1,0 +1,88 @@
+<%  unless @batch.nil? %>
+  <div class="add_sub">
+    <%= link_to_remote 'Add Normal Subject', :url => { :action => 'new', :id => @batch } unless defined? @elective_group %>
+  </div>
+<%  end %>
+<% unless @subjects.empty? %>
+  <ul id="category-list">
+    <% unless params[:subject].nil? %>
+      <% if params[:subject][:elective_group_id]=="" %>
+    <div class="add_sub">
+      <%= link_to_remote 'Add Subject to this Elective group', :url => { :controller=>"subjects",:action => 'new', :id => @batch,:id2=> params[:subject][:elective_group_id]} if defined? @elective_group%>
+    </div>
+    <% end %>
+    <% end %>
+    <% @subjects.each do |subject| %>
+      <li id="subject-<%= subject.id %>" class="list<%= cycle('even','odd')%>" >
+        <div class="category-name"><%= subject.name %></div>
+        <div class="opt">
+          <div class="category-code"><%= subject.code %></div>
+          <div class="category-edit"><%= link_to_remote('Edit',
+              :url => { :controller=>"subjects",:action => 'edit', :id =>subject,:id2=>@elective_group},
+              :method => 'get' ) %> </div>
+          <div class="category-delete">
+   <% @subject_exams= Exam.find_by_subject_id(subject.id) %>
+              <% if @subject_exams.nil? %>
+            <%= link_to_remote('Delete',
+              :url => subject_path(subject),
+              :method => 'delete',
+              :confirm => 'Are you sure?',
+              :update => "subject-#{subject.id}") %>
+            <% else %>
+            <s>Delete</s>
+            <% end %>
+            </div>
+            <% unless subject.elective_group_id.nil? %>
+            <div class="category-assign"><%= link_to "Assign Students", :controller=>"student", :action=>"electives",:id=>@batch,:id2=>subject.id%>
+            </div>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%  unless @batch.nil? %>
+  <div class="add_sub">
+    <%= link_to 'New Elective Group', new_batch_elective_group_path(@batch) unless defined? @elective_group  %>
+  </div>
+<%  end %>
+
+<% unless @elective_groups.nil? %>
+  <% @elective_groups.each do |e| %>
+    <% @esubjects = @batch.elective_batch_subject(e.id) #Subject.find_all_by_elective_group_id(e.id) %>
+    <div class="add_sub">
+      <%= link_to_remote 'Add Subject to this Elective group', :url => { :controller=>"subjects",:action => 'new', :id => @batch,:id2=>e} %>
+    </div>
+    <ul id="category-list">
+          <h5><%=  e.name %></h5>
+      <% @esubjects.each do |subject| %>
+        <li id="subject-<%= subject.id %>" class="list<%= cycle('even','odd')%>" >
+          <div class="category-name"><%= subject.name %></div>
+          <div class="opt">
+            <div class="category-code"><%= subject.code %></div>
+            <div class="category-edit"><%= link_to_remote('Edit',
+                :url => { :controller=>"subjects",:action => 'edit', :id =>subject,:id2=>@elective_group},
+                :method => 'get' ) %> </div>
+            <div class="category-delete">
+              <% @subject_exams= Exam.find_by_subject_id(subject.id) %>
+              <% if @subject_exams.nil? %>
+              <%= link_to_remote('Delete',
+                :url => subject_path(subject),
+                :method => 'delete',
+                :confirm => 'Are you sure?',
+                :update => "subject-#{subject.id}") %>
+              <% else %>
+              <s>Delete</s>
+              <% end %>
+              <% unless subject.elective_group_id.nil? %></div>
+              <div class="category-assign"><%= link_to "Assign Students", :controller=>"student", :action=>"electives",:id=>@batch,:id2=>subject.id%>
+              </div>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+
+    </ul>
+  <% end %>
+<% end %>

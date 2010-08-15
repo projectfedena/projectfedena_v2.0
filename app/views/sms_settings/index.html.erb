@@ -1,0 +1,19 @@
+<% form_for :sms_settings do |s| %>
+      <%= s.check_box :application_enabled, :checked=>@application_sms_enabled.is_enabled %>Application<br/>
+      <%= s.submit "Update" %>
+<% end %>
+<br/><br/>
+<% unless @application_sms_enabled.is_enabled == false %>
+General SMS Settings:<br/>
+  <% form_for :general_settings, :url=>{:controller=>"sms_settings",:action=>"update_general_sms_settings"} do |sms| %>
+   <%= sms.check_box :student_admission_enabled, :checked=>@student_admission_sms_enabled.is_enabled %>StudentAdmission<br/>
+   <%= sms.check_box :exam_schedule_enabled, :checked=>@exam_schedule_sms_enabled.is_enabled %>ExamSchedule<br/>
+   <%= sms.check_box :result_publish_enabled, :checked=>@result_publish_sms_enabled.is_enabled %>ResultPublish<br/>
+   <%= sms.check_box :student_attendance_enabled, :checked=>@student_attendance_sms_enabled.is_enabled %>Attendance<br/>
+   <%= sms.check_box :news_events_enabled, :checked=>@news_events_sms_enabled.is_enabled %>News/Events<br/><br/>
+   <%= sms.check_box :sms_parents_enabled, :checked=>@parents_sms_enabled.is_enabled %>Send Sms to Parents<br/>
+   <%= sms.check_box :sms_students_enabled, :checked=>@students_sms_enabled.is_enabled %>Send Sms to Students<br/>
+   <%= sms.submit "Update" %>
+
+  <% end %>
+<% end %>

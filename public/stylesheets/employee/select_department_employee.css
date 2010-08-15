@@ -1,0 +1,49 @@
+.drop-down-box{
+    margin:50px 0 0 200px;
+    height:80px;
+    width:300px;
+}
+
+
+.drop-down-box label {
+    color : #444;
+    display : block;
+    font-weight : bold;
+    margin : 0 0 10px 0;
+}
+.drop-down-box input {
+    background : transparent;
+    border : 0;
+    margin : 5px 0 0 10px;
+    width : 210px;
+}
+
+
+#employee-list {
+    clear : both;
+    padding : 10px 0 40px 180px;
+}
+#employee-list li {
+    background : #E4EBFE;
+    border-top:1px solid #BECFFB;
+    color : #444;
+    height : 1.5em; width : 200px;
+    list-style-type : none;
+    padding : 0.5em 0 0 5em;
+}
+
+#employee-list li.heading {
+    background : none;
+    font-weight : bold;
+    border:none;
+}
+#employee-list li div {
+    float : left;
+}
+#employee-list li div.employee-name {
+    width : 350px;
+}
+
+#employee-list li div a {
+    color : #000;
+}

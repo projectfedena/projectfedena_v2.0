@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title><%= @title %></title>
+    <link rel="icon" href="/favicon.ico" type="image/ico" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/ico" />
+
+    <%= stylesheet_link_tag(['_layouts/dashboard', '_styles/ui.all'])%>
+    <%= stylesheet_link_tag(*get_stylesheets) %>
+    <%= stylesheet_link_tag 'modalbox' %>
+
+    <%= javascript_include_tag :defaults, :cache => 'cache/javascripts/all' %>
+    <%= javascript_include_tag 'scripts/anylinkmenu', 'scripts/nicetitle', 'droplicious' %>
+    <%= javascript_include_tag "fckeditor/fckeditor" %>
+    <%= javascript_include_tag 'prototype' %>
+    <%= javascript_include_tag 'builder' %>
+    <%= javascript_include_tag 'modalbox' %>
+
+    <script type="text/javascript">
+      /***********************************************
+       * Dynamic Countdown script- © Dynamic Drive (http://www.dynamicdrive.com)
+       * This notice MUST stay intact for legal use
+       * Visit http://www.dynamicdrive.com/ for this script and 100s more.
+       ***********************************************/
+      var anylinkmenu1={divclass:'anylinkmenu', inlinestyle:'', linktarget:''} //First menu variable. Make sure "anylinkmenu1" is a unique name!
+       anylinkmenu1.items = [
+        ["Calendar", "/calendar"],
+        ["Examination", "/exam"],
+        ["News", "/news"],
+        ["Event Creation", "/event"],
+        ["Human Resource", "/employee/hr"],
+        ["Finance", "/finance/index"],
+        ["Users", "/user"],
+      ]
+      anylinkmenu.init("menuanchorclass");
+    </script>
+  </head>
+
+  <body>
+    <div id="header_bg">
+      <div id="header">
+        <div id="main-menu">
+          <%= link_to "Dashboard", :controller => "user", :action => "dashboard" %>
+          <% this_user = User.find(session[:user_id]) if session[:user_id] %>
+          <%  if this_user.student? || this_user.employee? %>
+          <%= link_to "Calendar", :controller => "calendar" %>
+          <% end %>
+          <%= link_to "Students", :controller => "student", :action => "index" \
+            if this_user.admin? %>
+          <%= link_to "Attendance", :controller => "student_attendance", :action => "index" \
+            if this_user.admin? %>
+          <%= link_to "Settings", :controller => "configuration", :action => "index" \
+            if this_user.admin? %> <!--
+          <%= link_to "News", :controller => "news", :action => "index" \
+            if this_user.admin? %> -->
+          <%= link_to "Timetable", :controller => "timetable", :action => "index" \
+            if this_user.admin? %>
+          <% if this_user.admin? %>
+            <a href="#" class="menuanchorclass" rel="anylinkmenu1">More ▼</a>
+          <% end %>
+
+        </div>
+        <div id="header_link" >
+          Logged in as:
+          <%= link_to this_user.first_name, :controller => 'user', :action => 'profile',
+            :id => this_user.username %> &nbsp;|&nbsp;
+            <%= link_to "Messages",:controller => "reminder", :action => "index" %>(<%= render  :partial => 'layouts/reminder_count' %>)&nbsp;|&nbsp;
+          <%= link_to 'Log out', :controller => 'user', :action => 'logout' %>  &nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+
+    <div id="content_wrapper" >
+      <div id="side_bar">
+        <div id="fedena_logo">
+          <% if FileTest.exists?("#{RAILS_ROOT}/public/uploads/image/institute_logo.jpg") %>
+            <%= image_tag  "/uploads/image/institute_logo.jpg" ,:width => "155",  :height=>"107" %>
+          <% else %>
+            
+          <div class="fed_logo">
+            <img src="/images/application/app_fedena_logo.jpg"/>
+          </div>
+          <% end %>
+        </div>
+        <div id="sidebar_news_area">
+          <% if action_name == "dashboard" %>
+            <%= link_to " ", { :controller => "news", :action => "index" }, :id => 'news_feed_top_img' %>
+            <div id="news_feed">
+              <% dash_news = News.find(:all, :order => 'created_at desc', :limit => 5) %>
+              <% dash_news.each do |n| %>
+                <div class="sidebar_news_item<%= cycle("0", "1") %>">
+                  <h5><%= link_to n.title, :controller => 'news', :action => 'view', :id => n.id %></h5>
+                  <small><%= time_ago_in_words(n.created_at) %> ago</small>
+                </div>
+              <% end %>
+              <div class="extender"> </div>
+              <%= link_to image_tag("/images/fedena_user/dashboard/news_feed_more_link.jpg", :border => 0), {:controller => "news", :action => "all"} %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div id="content"> <%= yield %> </div>
+
+      <div class="extender"></div>
+    </div>
+<%= periodically_call_remote(:url =>{ :controller=>'user',:action=>'header_link'}, :frequency => '120', :update => 'header_link') %>
+    <div id="footer">
+      <div id="footer_logo">
+            <div id="powered_by">
+          Powered by <a href="http://www.projectfedena.org/" target="_blank">Fedena</a>
+        </div>
+          <a href="http://www.projectfedena.org/"  target="_blank" class="footer-logo"></a>
+      </div>
+    </div>
+  </body>
+</html>

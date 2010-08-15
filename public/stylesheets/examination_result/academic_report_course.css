@@ -1,0 +1,61 @@
+
+#students {
+    clear : both;
+    height : 300px;
+    margin : 20px auto;
+    padding : 0px;
+    width : 825px;
+}
+#student_name {
+    float : left;
+    padding : 10px 0px 10px 0;
+    text-decoration : none;
+    width : 204px;
+}
+#student_name a {
+    color : #000;
+    font-weight : bold;
+    text-decoration : none;
+}
+#student_name a:hover {
+    color : #9E0F15;
+    text-decoration:underline;
+}
+
+.students-on-one-line {
+    background : #fff url(../../images/student_details/ajax_result_underline.jpg) bottom left repeat-x;
+    overflow: auto;
+    width:816px;
+    margin-bottom: 20px;
+}
+.label-field-pair-select-class {
+height:40px;
+padding-top:3px;
+width:500px;
+margin:0px auto;
+}
+.label-field-pair-select-class label {
+color:#444444;
+display:block;
+float:left;
+font-size:14px;
+font-weight:600;
+margin:0 0 10px;
+padding-top:10px;
+width:120px;
+}
+#loader{
+    padding-top:10px;
+}
+#result{
+    padding-top:10px;
+    width:810px;
+    margin:auto;
+}
+.label-field-pair{
+    margin:auto;
+    width:400px;
+}
+.label-field-pair label{
+    width:150px;
+}

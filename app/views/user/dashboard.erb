@@ -1,0 +1,150 @@
+<div id="content_header">
+  <h1 id="main_heading">Welcome</h1>
+  <h3 id="sub_heading">to Fedena dashboard</h3>
+</div>
+
+<% unless flash[:notice].nil? %> <p class="flash-msg"> <%= flash[:notice] %> </p> <% end %>
+
+<div id="user_options">
+
+  <% if @user.admin? %>
+    <%= link_to "", {:controller => "student", :action => "admission1"},
+      :class => "option_buttons", :id => "admission_button", :title => "Enter a Students admision details into the school records."%>
+    <%= link_to "", {:controller => "student", :action => "index"},
+      :class => "option_buttons", :id => "student_details_button", :title => "Search for an existing and former student records."%>
+    <%= link_to "", {:controller => "user", :action => "index"},
+      :class => "option_buttons", :id => "manage_users_button", :title => "Manage the Users of Fedena." %>
+    <%= link_to "", {:controller => "news", :action => "index"},
+      :class => "option_buttons", :id => "manage_news_button",:title => "View or publish latest school news and announcements"%>
+    <%= link_to "", {:controller => "exam", :action => "index"},
+      :class => "option_buttons", :id => "examinations_button",:title => "See examination details and results" %>
+    <%= link_to "", {:controller => "timetable", :action => "index"},
+      :class => "option_buttons", :id => "timetable_button",:title => "Timetable management module" %>
+    <%= link_to "", {:controller => "student_attendance", :action => "index"},
+      :class => "option_buttons", :id => "student_attendance_button", :title => "Manage the attendance for the students" %>
+    <%= link_to "", {:controller => "configuration", :action => "index"},
+      :class => "option_buttons", :id => "settings_button", :title => "Configure the basic school settings" %>
+
+    <% if @config.include?('HR') %>
+      <%= link_to "", {:controller => "employee", :action => "hr"},
+        :class => "option_buttons", :id => "hr_button", :title => "        Human Resource Department" %>
+    <% end %>
+
+    <% if @config.include?('Finance') %>
+      <%= link_to "", {:controller => "finance", :action => "index"},
+        :class => "option_buttons", :id => "finance_button", :title => "        Manages Finance module    " %>
+    <% end %>
+
+  <% elsif @user.student? %>
+
+    <%= link_to "", {:controller => "student", :action => "profile", :id => @student.id},
+      :class => "option_buttons", :id => "student_details_button", :title => "        View your profile." %>
+    <%= link_to "", {:controller => "news", :action => "index"},
+      :class => "option_buttons", :id => "campus_news_button",:title => "Search for news/announcements"%>
+    <%= link_to "", {:controller => "timetable", :action => "student_view",:id=>@student.id},
+      :class => "option_buttons", :id => "timetable_button",:title => "Timetable management module" %>
+
+    <% unless @user.check_reminders == 0 %>
+      <div class="reminder1">
+        <%= link_to "", {:controller => "reminder", :action => "index"},
+          :class => "option_buttons", :id => "reminders_button", :title => "         Student messages."%>
+        <div class ="count"><%= render :partial => 'layouts/reminder_count' %></div>
+      </div>
+    <% else %>
+      <%= link_to "", {:controller => "reminder", :action => "index"},
+        :class => "option_buttons", :id => "reminders_button", :title => "         Student messages."%>
+    <% end %>
+    <%= link_to "", {:controller => "student", :action => "reports",:id => @student.id},
+      :class => "option_buttons", :id => "academic_button",:title => "         Academic Reports   " %>
+
+  <% else %>
+
+    <% if @config.include?('HR') %>
+      <%= link_to "", {:controller => "employee", :action => "profile",:id => @employee.id},
+        :class => "option_buttons", :id => "my_profile_button", :title => "  Employee profile details." unless @employee.nil?%>
+    <% end  %>
+
+
+    <% if permitted_to? :admission1, :student %>
+      <%= link_to "", {:controller => "student", :action => "admission1"},
+        :class => "option_buttons", :id => "admission_button", :title => "Enter a Students admision details into the school records."%>
+    <%end%>
+
+    <% if permitted_to? :index, :student%>
+      <%= link_to "", {:controller => "student", :action => "index"},
+        :class => "option_buttons", :id => "student_details_button", :title => "Search for an existing and former student records."%>
+    <%end%>
+
+    <% if permitted_to? :index, :user %>
+      <%= link_to "", {:controller => "user", :action => "index"},
+        :class => "option_buttons", :id => "manage_users_button", :title => "Manage the Users of Fedena." %>
+    <%end%>
+
+    <% if permitted_to? :add,:news %>
+      <%= link_to "", {:controller => "news", :action => "index"},
+        :class => "option_buttons", :id => "manage_news_button",:title => "Search for news/announcements"%>
+    <% else %>
+      <%= link_to "", {:controller => "news", :action => "index"},
+        :class => "option_buttons", :id => "campus_news_button",:title => "Search for news/announcements"%>
+    <%end%>
+
+    <% if permitted_to? :leave_management, :employee %>
+      <%= link_to "", {:controller => "employee", :action => "leave_management"},
+        :class => "option_buttons", :id => "leaves_button", :title => "Leave Management."%>
+    <%else%>
+      <% if @config.include?('HR') %>
+        <%= link_to "", {:controller => "employee_attendance", :action => "leaves",:id => @employee.id},
+          :class => "option_buttons", :id => "leaves_button", :title => "Employee leave details." unless @employee.nil?%>
+      <%end%>
+    <%end%>
+
+    <% unless @user.check_reminders == 0 %>
+      <div class="reminder1">
+        <%= link_to "", {:controller => "reminder", :action => "index"},
+          :class => "option_buttons", :id => "reminders_button", :title => "Employee messages."%>
+        <div class ="count"><%= render :partial => 'layouts/reminder_count' %></div>
+      </div>
+
+    <% else %>
+      <%= link_to "", {:controller => "reminder", :action => "index"},
+        :class => "option_buttons", :id => "reminders_button", :title => "            Student messages."%>
+    <% end %>
+
+    <% if permitted_to? :index, :student_attendance or  permitted_to? :index, :attendances %>
+      <%= link_to "", {:controller => "student_attendance", :action => "index"},
+        :class => "option_buttons", :id => "student_attendance_button", :title => "Manage the attendance for the students" %>
+    <%end%>
+
+    <% if permitted_to? :index, :exam %>
+      <%= link_to "", {:controller => "exam", :action => "index"},
+        :class => "option_buttons", :id => "examinations_button",:title => "See examination details and results" %>
+    <%end%>
+
+    <% if permitted_to? :index, :timetable %>
+      <%= link_to "", {:controller => "timetable", :action => "index"},
+        :class => "option_buttons", :id => "timetable_button",:title => "Timetable management module" %>
+    <%end%>
+
+    <% if permitted_to? :index, :configuration %>
+      <%= link_to "", {:controller => "configuration", :action => "index"},
+        :class => "option_buttons", :id => "settings_button", :title => "Configure the basic school settings" %>
+    <% end %>
+    <% if @config.include?('HR') %>
+      <% if permitted_to? :hr,:employee %>
+        <%= link_to "", {:controller => "employee", :action => "hr"},
+          :class => "option_buttons", :id => "hr_button", :title => "        Human Resource Department" %>
+      <% end %>
+    <% end %>
+
+    <% if permitted_to? :index,:finance %>
+      <%= link_to "", {:controller => "finance", :action => "index"},
+        :class => "option_buttons", :id => "finance_button", :title => "        Manages Finance module    " %>
+    <% end %>
+
+  <% end %>
+
+
+</div>
+
+<div id="option_description"> </div>
+ 

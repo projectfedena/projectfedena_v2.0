@@ -1,0 +1,7 @@
+<%= select  :examination_result, :examtype_id, @examtypes.map { |e| [e.name, e.id] },
+  {:prompt => "Select examtype"},
+  {:onchange =>"#{remote_function(:url => {:action => "load_all_sub_result"},
+  :with => "'examination_type_id='+value+'&course_id='+$('examination_result_course_id').value+'examination_result='+value+'examination_type_id='+value",
+  :before => "Element.show('loader')",
+  :success => "Element.hide('loader')"
+  )}"}%>

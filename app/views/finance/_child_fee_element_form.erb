@@ -1,0 +1,18 @@
+<% form_remote_for :element,
+      :url => {:action => 'create_child_fee_element'},
+      :complete => 'Modalbox.hide();return false;' do |f| %>
+
+  <%= f.hidden_field :parent_id %>
+  <%= f.hidden_field :fee_collection_id %>
+  <%= f.hidden_field :student_id %>
+  <%= f.hidden_field :label %>
+  
+  <p>
+    Fee component - <%= @element.label %>
+  </p>
+  <p>Amount<br/>
+    <%= f.text_field :amount %>
+  </p>
+
+  <p> <%= f.submit %> </p>
+<% end %>

@@ -1,0 +1,162 @@
+
+.text-input-bg {
+    float : left;
+    margin : 0 0 0 40px;
+}
+#submit_view {
+    margin : 40px 0 0 100px;
+}
+#submit_pdf {
+    margin : 40px 0 0 0;
+}
+#submit_view, #submit_pdf {
+    width : 150px;
+    padding : 5px 0 0 30px;
+    height : 50px;
+    float : left;
+}
+#res_table {
+    margin:0 auto;
+    margin-top:50px;
+    padding-bottom:50px;
+    
+}
+td div {
+    width: 100px;
+    text-align:center;
+}
+td.td-name div{
+    width:150px;
+    padding-left:10px;
+}
+.res-table {
+    margin:0 auto;
+    overflow: scroll;
+    max-height:300px;;
+}
+.res-table table {
+    
+}
+.td-name{
+    width:250px;
+    
+}
+.td-subj{
+    text-align:center;
+    width:80px;
+}
+.tr-odd {
+    padding-left:35px;
+    font-size:13px;
+    font-weight:bold;
+    height:30px;
+    clear:both;
+    background:#E4EBFE;
+}
+.tr-even {
+    padding-left:35px;
+    font-size:13px;
+    font-weight:bold;
+    height:30px;
+    clear:both;
+    background:#DAE6FF;
+}
+.tr-head {
+    padding-left:35px;
+    height:30px;
+    font-size:15px;
+    clear:both;
+    color:#27649F;
+    background:#DAE6FF;
+}
+.res_td_name {
+    float:left;
+    width:180px;
+    padding-top:5px;
+}
+td a {
+    text-decoration:none;
+    color:#000;
+    padding-left:10px;
+}
+.res_td {
+    float:left;
+width:80px;
+    padding-top:5px;
+}
+#result-info {
+    color : #999999;
+    text-align : left;
+    margin : 10px 0 15px 0;
+    font-weight:bold;
+    float:left;
+    width:150px;
+}
+form{
+    width:650px;
+    margin:0px auto;
+}
+.btn {
+    float:right;
+    margin : 0px auto;
+    padding : 10px 0 0 0;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    background:#27292B none repeat scroll 0 0;
+    color:#FFFFFF;
+    font-family:arial;
+    font-size:14px;
+    font-weight:bold;
+    padding:7px 10px;
+    border:none;
+    cursor:pointer;
+}
+.btn a{
+    color:#fff;
+    text-decoration: none;
+}
+#loader{
+    padding-top:10px;
+}
+/* hide from incapable browsers */
+div#scrollbar {
+    display:none;
+    }
+
+/* below in external file */
+div#wn	{
+    position:relative;
+    width:900px; height:152px;
+    overflow:hidden;
+	}
+div#scrollbar {
+    position:relative;
+    width:900px; height:11px;
+    display:block; /* display:none initially */
+    font-size:1px;  /* so no gap or misplacement due to image vertical alignment */
+  }
+
+div#track {
+    position:absolute; left:12px; top:0;
+    width:890px; height:11px;
+    background: #336;
+  }
+div#dragBar {
+    position:absolute; left:1px; top:1px;
+    width:20px; height:9px;
+    background-color:#ceced6;
+  }
+div#left { position:absolute; left:0; top:0; }
+div#right { position:absolute; right:0; top:0;  }
+
+/* for safari, to prevent selection problem  */
+div#scrollbar, div#track, div#dragBar, div#left, div#right {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+}
+
+/* so no gap or misplacement due to image vertical alignment
+font-size:1px in scrollbar has same effect (less likely to be removed, resulting in support issues) */
+div#scrollbar img {
+    display:block;
+    } 

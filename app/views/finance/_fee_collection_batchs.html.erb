@@ -1,0 +1,8 @@
+<div class="label-field-pair"><label> Select course: </label></div>
+<div class="fee_category_scroll">
+  <% @batchs.each do |f| %>
+  <div class="each_batch">
+     <%= check_box_tag "fee_collection[batch_ids][]", f.id %> <%= f.full_name %>
+  </div>
+  <% end %>
+</div>

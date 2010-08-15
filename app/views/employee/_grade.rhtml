@@ -1,0 +1,15 @@
+
+<ul id="grade-list">
+  <% unless @grades.empty? %>
+    <li class="heading"> Grade name </li>
+    <% @grades.each do |g| %>
+      <li class="list<%=cycle('odd', 'even')%>">
+        <div class="grade-name"><%= g.name %>(<%= g.priority %>)</div>
+        <div class="grade-edit"><%= link_to "Edit", :action => "edit_grade", :id=>g.id %></div>
+        <div class="grade-edit"><%= link_to "Delete", {:action => "delete_grade", :id=>g.id}, :confirm => "Are you sure?" %></div>
+      </li>
+    <% end %>
+  <% else %>
+    <p class="flash-msg"> No Employee grades record found</p>
+  <% end %>
+</ul>

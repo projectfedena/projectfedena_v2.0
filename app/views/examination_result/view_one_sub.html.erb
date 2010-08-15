@@ -1,0 +1,46 @@
+<div id="content-header">
+  <img src="/images/admission/admission_page_logo.jpg" alt="" />
+  <h1>View results</h1>
+  <h3>For one subject</h3>
+  <div id="app-back-button">
+   <%= link_to image_tag("/images/buttons/back.png", :border => 0), :back %>
+  </div>
+</div>
+
+<div id="page-yield">
+
+  <% unless flash[:notice].nil? %> <p class="flash-msg"> <%= flash[:notice] %> </p> <% end %>
+
+  <div class="select-form">
+
+    <div class="text-input-bg" id="courses1">
+      <%= select :examination_result, :course_id, @courses.map { |c| [c.grade + " - " + c.section, c.id] },
+        {:selected => @sel_course_id, :include_blank => "Select course"},
+        {:onChange => "#{remote_function(:url => {:action => "update_one_subject"},
+        :with => "'course_id='+value",
+        :before => "Element.show('loader')",
+        :success => "Element.hide('loader')"
+         )}" } %>
+    </div>
+
+    <div class="text-input-bg" id="subjects1">
+      <%= render :partial => 'one_sub' %>
+    </div>
+
+    <% form_for :examination_result do %>
+
+      <div class="text-input-bg" id="exams1">
+        <%= render :partial => 'one_sub_exams', :object => @exams %>
+      </div>
+    <% end %>
+    <%= image_tag("loader.gif",
+              :align => "absmiddle",
+              :border => 0,
+              :id => "loader",
+              :style =>"display: none;" ) %>
+  </div>
+      <div id="exam_result"> </div>
+
+
+
+</div>

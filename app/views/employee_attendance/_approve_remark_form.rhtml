@@ -1,0 +1,30 @@
+ <div class="approval-form">
+
+
+  <% form_for :approve_leave,  :url => {:action => 'approve_leave'} do %>
+
+
+                    <%= link_to_remote "",
+             :update => "remark-form",
+             :url => {:action => "cancel"} %>
+
+      <div class="remark-field-pair">
+        <label for="course_grade">Approval remarks</label>
+        <div class="remark-input-bg"> <%= text_field_tag :manager_remark %> </div>
+        <%= hidden_field_tag :applied_leave, @applied_leave.id %>
+      </div>
+
+
+
+      <div class="submit-button">
+        <%=submit_tag "OK",:class=>'submit_button' %>
+      </div>
+
+
+
+
+  <div class="extender"></div>
+
+<% end %>
+
+</div>

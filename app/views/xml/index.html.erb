@@ -1,0 +1,24 @@
+<div id="content-header">
+   <img src="/images/show_finance.png" alt="" />
+  <h1>Finance</h1>
+  <h3>Tally</h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+  <div class="box">
+
+
+  <div class="link-box">
+    <div class="link-heading"><%= link_to "Tally settings", :action => "settings" %></div>
+    <div class="link-descr">Change ledger settings for Tally</div>
+  </div>
+
+  <div class="link-box">
+    <div class="link-heading"><%= link_to " Export for Tally",:controller => 'xml', :action => "create_xml" %></div>
+    <div class="link-descr"> Creates xml import file for tally</div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,11 @@
+
+
+<% @categories.each do |cat| %>
+  <div class="container<%= cycle('odd', 'even')%> ">
+    <div class="title"> <%= cat.name %></div>
+    <%unless (cat.id == 1 or cat.id ==2 or cat.id ==3) %>
+      <div class="edit"><%= link_to_remote 'Edit', :url => { :action => 'category_edit', :id => cat.id } %></div>
+    <%end %>
+  </div>
+<% end %>
+<div id="modal-box" style="display:none;"></div>

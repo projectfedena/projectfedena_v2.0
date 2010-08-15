@@ -1,0 +1,8 @@
+  <div class="text-input-bg"><%= select :examination_result, :exam_id, @exams.map { |e| [e.subject.name + " " + e.examination_type.name, e.id] },
+          {:selected => @sel_exam_id, :include_blank => "Select exam"},
+          {:onchange =>"#{remote_function(:url => {:action => "load_one_sub_result"}, 
+          :with => "'examination_id='+value",
+          :before => "Element.show('loader')",
+          :success => "Element.hide('loader')"
+          )}"} %>
+          </div>

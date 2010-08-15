@@ -1,0 +1,35 @@
+<div class="info">
+  <div class="name">Fee Collection Name</div><div class="val"><span>:</span><%= @fee_collection.name %></div>
+<div class="name">Fee Category Name</div><div class="val"><span>:</span><%= @fee_category.name %></div>
+<div class="name">Start date</div><div class="val"><span>:</span><%= @fee_collection.start_date %></div>
+<div class="name">End date</div><div class="val"><span>:</span><%= @fee_collection.end_date %></div>
+<div class="name">Due date</div><div class="val"><span>:</span><%= @fee_collection.due_date %></div>
+<div class="extender"></div>
+</div>
+<% total_fees =0 %>
+<% unless @fee_particulars.nil? %>
+  <table id="listing" align="center" width="100%" cellpadding="1" cellspacing="1">
+    <tr class="tr-head">
+      <td>Sl no.</td>
+      <td>Particulars</td>
+      <td>Amount (<%= currency %>  )</td>
+    </tr>
+    <tr class="tr-blank"></tr>
+    <% @fee_particulars.each_with_index do |fee,i| %>
+      <tr class="tr-<%= cycle("odd","even") %>">
+        <td class="col-1"><%= i+1 %></td>
+        <td class="col-2"><%= shorten_string(fee.name,20) %></td>
+        <td class="col-6"><%= fee.amount%></td>
+      </tr>
+      <% total_fees += fee.amount %>
+    <% end %>
+    <tr class="tr-blank"></tr>
+    <tr class="tr-blank"></tr>
+    <tr class="tr-<%= cycle("odd","even") %>" cellpadding="1" cellspacing="1">
+      <td class="col-1" >Total Fees</td>
+      <td class="col-1" ></td>
+      <td class="col-6" ><%= total_fees%></td>
+    </tr>
+  </table>
+<% end %>
+<%= link_to "PDF Report",{:action => "pdf_fee_structure",:id => @student.id,:id2=>@fee_collection.id},:class => 'user_button'%>

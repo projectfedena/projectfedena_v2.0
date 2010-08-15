@@ -1,0 +1,31 @@
+<div id="exam_result">
+  <div class="result-info"><%= @exm.subject.course.grade %>-<%= @exm.subject.course.section %>&nbsp;&nbsp;&nbsp;<%=@exm.subject.name%></div>
+  <div class="res_tr-head">
+    <div class="res_td_name"><b>Name</b></div>
+    <div class="res_td"> <b>Marks</b> </div>
+    <div class="res_td"> <b>Grade</b></div>
+  </div>
+
+
+    <%- @students.each do |s| -%>
+      <%- x = ExaminationResult.find_by_examination_id_and_student_id(@exm.id, s.id); m = x.marks unless x.nil? -%>
+
+    <div class="res_tr<%=cycle('odd', 'even')%>">
+      <div class="res_td_name"><%= s.first_name %> <%= s.last_name %></div>
+      <div class="res_td"><%= m || "-"%> </div>
+      <% unless x.nil? %>
+        <%unless x.grading.nil? %>
+          <div class="res_td"><%= x.grading.name %>    </div>
+        <% else %>
+          <div class="res_td"><%= "-" %>    </div>
+        <% end %>
+        <% else %>
+          <div class="res_td"><%=  "-" %>    </div>
+      <% end %>
+    </div>
+    <%- end -%>
+
+
+ <div class="btn"><%= link_to "► View PDF report",  :action => "one_sub_pdf", :id => @exm.id,  :format => 'pdf' %></div>
+
+</div>

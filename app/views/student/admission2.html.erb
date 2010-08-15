@@ -1,0 +1,188 @@
+<div id="content-header">
+  <img src="/images/admission/admission_page_logo.jpg" />
+  <h1>Admission</h1>
+  <h3>Step 2 - Parent/guardian details</h3>
+</div>
+
+<div id="page-yield">
+
+  <% unless flash[:notice].nil? %> <p class="flash-msg"> <%= flash[:notice] %> </p> <% end %>
+
+  <div id="parents">
+
+    <% unless @student.guardians.empty? %>
+
+      <ul id="parents-list">
+        <p>Following guardians has been saved for <%= @student.first_name + ' ' + @student.last_name %> </p>
+        <%- @student.guardians.each do |p| -%>
+          <li class="list<%=cycle('odd', 'even')%>"><%= p.full_name %> - <%= p.relation %> </li>
+        <%  end %>
+        <div id="add-more-parent">
+          <%= link_to_function '► Add another guardian' do |page|
+            page.visual_effect :toggle_slide, "admission1_form"
+            page.hide "parents"
+          end %>
+        </div>
+        <div id="skip">
+          <%= link_to "► Finish", {:controller => "student", :action => "admission3", :id => @student.id } %>
+        </div>
+        <script type="text/javascript">
+          Event.observe(window, 'load', function() { $('admission1_form').hide(); });
+        </script>
+      </ul>
+
+    <%  end %>
+
+  </div>
+
+  <% form_for :guardian do |f| %>
+
+    <%= f.error_messages :header_message => nil %>
+
+    <div id="admission1_form">
+
+      <div id="admission1_form_vertical_block_left">
+
+        <div class="label-field-pair">
+          <label for="parent_detail_student_id">Student Admission no.</label>
+          <div class="text_display"><%= @student.admission_no %></div>
+          <%= f.hidden_field :ward_id, :value => @student.id %>
+        </div>
+
+        <br/>
+        <span class="span-sub-heading">Parent - Personal  Details</span>
+        <hr class="sub-heading"></hr>
+
+        <div class="label-field-pair">
+          <label for="parent_detail_name">First name</label>
+          <div class="text-input-bg"><%= f.text_field :first_name %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="parent_detail_name">Last name</label>
+          <div class="text-input-bg"><%= f.text_field :last_name %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="parent_detail_relation">Relationship</label>
+          <div class="text-input-bg"><%= f.text_field :relation %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="parent_detail_dob">Date of birth</label>
+          <div class="text-input-bg"><%= calendar_date_select_tag 'guardian[dob]', nil,
+              :year_range => 60.years.ago..20.years.ago %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="parent_detail_education">Education</label>
+          <div class="text-input-bg"><%= f.text_field :education %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="parent_detail_occupation">Occupation</label>
+          <div class="text-input-bg"><%= f.text_field :occupation %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="parent_detail_income">Income</label>
+          <div class="text-input-bg"><%= f.text_field :income %></div>
+        </div>
+
+        <br/>
+
+        <span class="span-sub-heading">Parent - Contact Details</span>
+
+        <hr class="sub-heading"></hr>
+
+        <div class="label-field-pair">
+          <label for="parent_detail_email">Email</label>
+          <div class="text-input-bg"><%= f.text_field :email %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+      </div>
+
+      <div id="admission1_form_vertical_block_right">
+
+        <div class="label-field-pair">
+          <label for="master_student_city">Address Line 1</label>
+          <div class="text-input-bg"><%= f.text_field :office_address_line1 %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_city">Address Line 2</label>
+          <div class="text-input-bg"><%= f.text_field :office_address_line2 %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="parent_detail_city">City</label>
+          <div class="text-input-bg"><%= f.text_field :city %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="parent_detail_state">State</label>
+          <div class="text-input-bg"><%= f.text_field :state %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="parent_detail_country">Country</label>
+          <div class="text-input-bg"> <%= select :guardian, :country_id, Country.all.map {|c| [c.name, c.id]}, :selected => 76 %> </div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="parent_detail_office_phone1">Phone 1</label>
+          <div class="text-input-bg"><%= f.text_field :office_phone1 %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="parent_detail_office_phone2">Phone 2</label>
+          <div class="text-input-bg"><%= f.text_field :office_phone2 %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="parent_detail_mob_phone">Mobile phone no.</label>
+          <div class="text-input-bg"><%= f.text_field :mobile_phone %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+      </div>
+
+      <div class="extender">
+        <%= submit_tag "", :value => " ► Finish",  :name => "commit", :class => "submit_button3" %>
+      </div>
+      <div id="skip">
+        <%= link_to "► Click here to skip", {:controller => "student", :action => "admission3", :id => @student.id } %>
+      </div>
+
+    </div>
+  <% end %>
+
+</div>

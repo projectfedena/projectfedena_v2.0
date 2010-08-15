@@ -1,0 +1,11 @@
+
+<% form_for :transaction, :url => { :id => @transaction.id } do |form| %>
+  <p>Title <%= form.text_field :title %> </p>
+  <p>Description <%= form.text_field :description %> </p>
+  <p>Amount <%= form.text_field :amount %> </p>
+  <p>Category <%= select :transaction, :category_id, 
+                @categories.map { |c| [c.name, c.id] },
+                :selected => @transaction.category_id
+              %> </p>
+  <p><%= form.submit %></p>
+<% end %>

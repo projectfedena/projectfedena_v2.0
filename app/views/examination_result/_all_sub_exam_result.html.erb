@@ -1,0 +1,39 @@
+
+
+<div id ="res_table">
+  <div id="result-info">
+    <%= @course.grade %> - <%= @course.section %> : <%= @examtype.name %>
+  </div>
+  <div class="btn"><%= link_to "► View PDF report",   {:action => "all_sub_pdf", :id => @course.id,:id2 => @examtype.id, :format => 'pdf'}, :target => '_blank' %></div>
+  <div class="extender"></div>
+  <div class="res-table">
+    <table border="0" align="center" width="100%" >
+      <tr class="tr-head"><td class="td-name"><div><b>Name</b></div></td>
+        <%- @exams.each do |exam| -%>
+        <% res = ExaminationResult.find_by_examination_id(exam.id) %>
+          <td width="200" class="td-subj"><b><%= res.examination.subject.code %></b></td>
+        
+        <%end%>
+          <td width="200" class="td-subj"><div><b>Max Marks</b></div></td>
+      </tr>
+
+      <% @students.each do |s| %>
+        <tr class="tr-<%=cycle('odd', 'even')%>">
+          <td><%= link_to s.first_name + " " + s.last_name,
+              :controller => "master_student",
+              :action => "profile", :id => s.id %></td>
+                 <% max_marks = 0 %>
+          <%- @exams.each do |exam| -%>
+          <% res = ExaminationResult.find_by_examination_id_and_student_id(exam.id, s.id) %>
+                <td> <div>&nbsp;<%= res.marks -%> <small>(<%= res.grading.name unless res.grading.nil? %>)</small></div></td>
+                               <% max_marks += res.maximum_marks %>
+          <%- end -%>
+                <td> <div><%= max_marks.to_i %></div></td>
+        </tr>
+      <%- end -%>
+    </table>
+  </div>
+  
+
+
+</div>

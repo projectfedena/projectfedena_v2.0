@@ -1,0 +1,23 @@
+
+<div id="weekday-form">
+  <p><%= @batch.full_name unless @batch.nil? %></p>
+
+  <% form_remote_for @weekday do |f| %>
+
+    <% batch_id = (@batch.nil? ? nil : @batch.id) %>
+    <%= f.hidden_field :batch_id, :value => batch_id %>
+
+    <p>
+      <%= f.label :select_weekday %>
+      <%= select :weekday, :weekday, { "Monday"=>'1', "Tuesday" => '2',"Thursday" =>'3',"Wednesday" =>'4',"Friday" =>'5',"Saturday"=>'6', "Sunday"=>'0' }%>
+    </p>
+<%= f.check_box :is_break, :checked => false %> Check if this is a break
+<%= f.check_box :is_break, :checked => false %> Check if this is a break
+    <p>
+      <%= f.submit %>
+    </p>
+
+    <div id="form-errors"></div>
+
+  <% end %>
+</div>

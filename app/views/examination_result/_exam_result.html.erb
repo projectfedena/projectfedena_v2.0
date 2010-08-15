@@ -1,0 +1,28 @@
+
+
+<div id="exam_result">
+  
+    <% form_for :examination_result, :url => {:action => "save", :controller => "examination_result"} do |res| %>
+
+      <%- @students.each do |s| -%>
+        <%- x = ExaminationResult.find_by_examination_id_and_student_id(@exm.id, s.id); m = x.marks unless x.nil? -%>
+       
+        <div class="st-marks-block">
+          <div class="st-name<%=cycle('odd', 'even')%>"> <%= s.first_name %> <%= s.last_name %> </div>
+          <div class="marks-input"> <%= res.text_field :marks, :index => s.id, :value => m, :size => 3 %> </div>
+
+        </div>
+    
+      <%- end -%>
+
+      <div id="submit-area">
+          
+        <%= hidden_field_tag :exam_id, @exm.id %>
+
+        <%= submit_tag "", :value => "► Update" %>
+      </div>
+      <div class="extender"> </div>
+    <%- end -%>
+  
+</div>
+

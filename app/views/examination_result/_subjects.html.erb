@@ -1,0 +1,9 @@
+    
+        <div class="text-input-bg"><%= select :examination_result, :subject_id, @subjects.map { |s| [s.name, s.id] },
+          {:prompt => "Select subject"},
+          {:onChange => "#{remote_function(:url => {:action => "update_exams"}, 
+          :with => "'subject_id='+value",
+          :before => "Element.show('loader')",
+          :success => "Element.hide('loader')"
+         )}"} %>
+</div>
