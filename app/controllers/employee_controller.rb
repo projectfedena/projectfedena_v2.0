@@ -347,7 +347,7 @@ class EmployeeController < ApplicationController
     @employee = Employee.find(params[:id])
     @additional_fields = AdditionalField.find(:all, :conditions=>"status = true")
     if @additional_fields.empty?
-      redirect_to :action => "edit_privilege", :id => @employee.id
+      redirect_to :action => "edit_privilege", :id => @employee.employee_number
     end
     if request.post?
       params[:employee_additional_details].each_pair do |k, v|
