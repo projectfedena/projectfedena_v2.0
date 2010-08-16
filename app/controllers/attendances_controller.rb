@@ -30,7 +30,7 @@ class AttendancesController < ApplicationController
       @sub =Subject.find params[:subject_id]
       @batch = @sub.batch_id
       @students = Student.find_all_by_batch_id(@batch)
-      @dates = PeriodEntry.find_all_by_batch_id_and_subject_id(@batch,@sub.id,  :conditions =>{:month_date => start_date..end_date})
+      @dates = PeriodEntry.find_all_by_batch_id_and_subject_id(@batch,@sub.id,  :conditions =>{:month_date => start_date..end_date},:order=>'month_date ASC')
     end
     respond_to do |format|
       format.js { render :action => 'show' }
@@ -80,7 +80,7 @@ class AttendancesController < ApplicationController
         end
         start_date = @today.beginning_of_month
         end_date = @today.end_of_month
-        @dates = PeriodEntry.find_all_by_batch_id(@batch.id, :conditions =>{:month_date => start_date..end_date})
+        @dates = PeriodEntry.find_all_by_batch_id(@batch.id, :conditions =>{:month_date => start_date..end_date},:order=>'month_date ASC')
         format.js { render :action => 'create' }
       end
     end
@@ -111,7 +111,7 @@ class AttendancesController < ApplicationController
         end
         start_date = @today.beginning_of_month
         end_date = @today.end_of_month
-        @dates = PeriodEntry.find_all_by_batch_id(@batch.id, :conditions =>{:month_date => start_date..end_date})
+        @dates = PeriodEntry.find_all_by_batch_id(@batch.id, :conditions =>{:month_date => start_date..end_date},:order=>'month_date ASC')
         format.js { render :action => 'update' }
       end
     end
@@ -132,7 +132,7 @@ class AttendancesController < ApplicationController
       end
       start_date = @today.beginning_of_month
       end_date = @today.end_of_month
-      @dates = PeriodEntry.find_all_by_batch_id(@batch.id, :conditions =>{:month_date => start_date..end_date})
+      @dates = PeriodEntry.find_all_by_batch_id(@batch.id, :conditions =>{:month_date => start_date..end_date},:order=>'month_date ASC')
       format.js { render :action => 'update' }
     end
   end
